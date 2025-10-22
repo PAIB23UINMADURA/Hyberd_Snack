@@ -101,7 +101,7 @@
       border: none;
       border-radius: 20px;
       padding: 8px 16px;
-      margin-left: 20px;
+      margin-left: 1px;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s;
@@ -273,6 +273,37 @@
       transition: background-color 0.4s ease;
     }
 
+    /* 🧾 Modal Form */
+    #orderModal {
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.5);
+      justify-content:center;
+      align-items:center;
+      z-index:2000;
+    }
+
+    #orderModal .modal-content {
+      background:var(--color-light);
+      color:var(--color-text);
+      padding:30px;
+      border-radius:15px;
+      width:90%;
+      max-width:400px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.2);
+      text-align:center;
+    }
+
+    #orderModal input {
+      width:90%;
+      padding:10px;
+      margin:5px 0;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+
     @media (max-width: 900px) {
       .hero {
         flex-direction: column;
@@ -308,7 +339,8 @@
     </div>
     <div class="hero-text">
       <h1>Camilan Bagus, Untuk yang Tulus!</h1>
-      <p>Camilan kekinian dari Hybrid Snack — Nikmati sensasi Bakkris gurih, Pisang Nudget manis, dan Es Lumut segar!</p>
+      <h3>𝗖𝗮𝗺𝗶𝗹𝗮𝗻 𝗸𝗲𝗸𝗶𝗻𝗶𝗮𝗻 𝗱𝗮𝗿𝗶 𝗛𝘆𝗯𝗿𝗶𝗱 𝗦𝗻𝗮𝗰𝗸</h3>
+      <p>Nikmati sensasi Bakkris gurih, Pisang Nudget manis, dan Es Lumut segar!</p>
       <a href="#products" class="btn">Lihat Menu</a>
     </div>
   </section>
@@ -324,7 +356,7 @@
           <h3>Bakkris (Bakso Krispi)</h3>
           <span class="price">Rp 6.000</span>
           <p>Renyah, gurih, dan pedasnya bikin nagih!</p>
-          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Bakkris%20ya%20kak!*" target="_blank">Pesan Sekarang</a>
+          <button class="btn order-btn" data-product="Bakkris">Pesan Sekarang</button>
         </div>
       </div>
 
@@ -335,7 +367,7 @@
           <h3>Pisang Nudget</h3>
           <span class="price">Rp 11.000</span>
           <p>Pisang manis berlapis coklat dan topping premium Gold Choco dan Keju.</p>
-          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Pisang%20Nudget%20ya%20Kak!*" target="_blank">Pesan Sekarang</a>
+          <button class="btn order-btn" data-product="Pisang Nudget">Pesan Sekarang</button>
         </div>
       </div>
 
@@ -346,7 +378,7 @@
           <h3>Es Lumut Segar</h3>
           <span class="price">Rp 8.000</span>
           <p>Minuman dingin viral dengan jelly lumut pandan, susu kental manis, dan es segar!</p>
-          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Es%20Lumut%20ya!*" target="_blank">Pesan Sekarang</a>
+          <button class="btn order-btn" data-product="Es Lumut">Pesan Sekarang</button>
         </div>
       </div>
     </div>
@@ -356,15 +388,64 @@
     <p>© 2025 Hybrid Snack | Dibuat dengan 💙 untuk kalian yang setia</p>
   </footer>
 
+  <!-- 🧾 Modal Form Pemesanan -->
+  <div id="orderModal">
+    <div class="modal-content">
+      <h3>Isi Data Pemesanan</h3>
+      <p id="selectedProduct" style="font-weight:600; margin-bottom:15px;"></p>
+      <input type="text" id="name" placeholder="Nama">
+      <input type="text" id="lokasi" placeholder="Lokasi Cth: (Gedung F Ruangan 22)">
+      <input type="number" id="jumlah" placeholder="Jumlah Porsi" min="1">
+      <button id="sendOrder" class="btn" style="margin-top:10px;">Chekout</button><br>
+      <button id="closeModal" class="toggle-btn" style="margin-top:10px;">Tutup</button>
+    </div>
+  </div>
+
   <script>
+    // 🌓 Mode Gelap/Terang
     const toggleBtn = document.getElementById('themeToggle');
     const body = document.body;
-
     toggleBtn.addEventListener('click', () => {
       const currentTheme = body.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       body.setAttribute('data-theme', newTheme);
       toggleBtn.textContent = newTheme === 'light' ? '🌙 Mode' : '☀️ Mode';
+    });
+
+    // 📦 Pemesanan ke WhatsApp
+    const orderButtons = document.querySelectorAll('.order-btn');
+    const modal = document.getElementById('orderModal');
+    const selectedProduct = document.getElementById('selectedProduct');
+    const sendOrder = document.getElementById('sendOrder');
+    const closeModal = document.getElementById('closeModal');
+    let productName = '';
+
+    orderButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        productName = button.dataset.product;
+        selectedProduct.textContent = `Produk: ${productName}`;
+        modal.style.display = 'flex';
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    sendOrder.addEventListener('click', () => {
+      const name = document.getElementById('name').value.trim();
+      const lokasi = document.getElementById('lokasi').value.trim();
+      const jumlah = document.getElementById('jumlah').value.trim();
+      if (!name || !lokasi || !jumlah) {
+        alert('Harap isi semua data sebelum melanjutkan.');
+        return;
+      }
+      const phone = '6289653881348';
+      const message = `*Assalamualaikum Hybrid Snack!*%0A%0A` +
+        `Saya ingin memesan:%0A🍴 *${productName}*%0A📦 Jumlah: *${jumlah} porsi*%0A%0A` +
+        `👤 Atas Nama: *${name}*%0A🎓 Lokasi: *${lokasi}*%0A%0ATerima kasih kak! 😊`;
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+      modal.style.display = 'none';
     });
   </script>
 
