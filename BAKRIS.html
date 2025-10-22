@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hybrid Snack - Camilan Kekinian</title>
+  <style>
+    /* 🎨 Warna Estetik Biru */
+    :root {
+      --color-primary: #3B82F6;
+      --color-secondary: #E0F2FE;
+      --color-dark: #1E3A8A;
+      --color-light: #FFFFFF;
+      --color-accent: #60A5FA;
+      --color-text: #1E293B;
+      --color-card-bg: #FFFFFF;
+      --color-hero-bg: #E0F2FE;
+      --color-footer-bg: #1E3A8A;
+    }
+
+    /* 🌙 Mode Gelap */
+    [data-theme="dark"] {
+      --color-primary: #60A5FA;
+      --color-secondary: #0F172A;
+      --color-dark: #BFDBFE;
+      --color-light: #1E293B;
+      --color-accent: #3B82F6;
+      --color-text: #E2E8F0;
+      --color-card-bg: #1E293B;
+      --color-hero-bg: #0F172A;
+      --color-footer-bg: #0F172A;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: var(--color-secondary);
+      color: var(--color-text);
+      line-height: 1.6;
+      transition: all 0.4s ease;
+    }
+
+    /* HEADER */
+    .header {
+      background-color: var(--color-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.4s ease;
+    }
+
+    [data-theme="dark"] .header {
+      background-color: #1E293B;
+      box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--color-dark);
+      margin-left: 25px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    [data-theme="dark"] .nav a {
+      color: var(--color-text);
+    }
+
+    .nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+    }
+
+    .nav a:hover::after {
+      width: 100%;
+    }
+
+    /* 🌓 Toggle Button */
+    .toggle-btn {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      margin-left: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .toggle-btn:hover {
+      background: var(--color-dark);
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 5%;
+      background-color: var(--color-hero-bg);
+      min-height: 70vh;
+      transition: background-color 0.4s ease;
+    }
+
+    .hero-text {
+      max-width: 500px;
+      flex: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 3em;
+      color: var(--color-dark);
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+
+    .hero-text p {
+      font-size: 1.1em;
+      color: var(--color-text);
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background-color: var(--color-primary);
+      color: var(--color-light);
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: var(--color-dark);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #BFDBFE, #93C5FD);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* PRODUCTS */
+    .products {
+      background-color: var(--color-light);
+      padding: 80px 5%;
+      text-align: center;
+      transition: background-color 0.4s ease;
+    }
+
+    [data-theme="dark"] .products {
+      background-color: var(--color-secondary);
+    }
+
+    .products h2 {
+      font-size: 2.5em;
+      color: var(--color-dark);
+      margin-bottom: 50px;
+      transition: color 0.3s;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .product-card {
+      background-color: var(--color-card-bg);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      width: 320px;
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+    }
+
+    [data-theme="dark"] .product-card {
+      box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+      height: 220px;
+      background-color: #DBEAFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      color: var(--color-dark);
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .product-image {
+      background-color: #1E3A8A;
+      color: #E0F2FE;
+    }
+
+    .product-content {
+      padding: 25px;
+    }
+
+    .product-content h3 {
+      color: var(--color-primary);
+      margin-bottom: 10px;
+      font-size: 1.4em;
+    }
+
+    .price {
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .product-content p {
+      font-size: 0.95em;
+      margin-bottom: 20px;
+      color: var(--color-text);
+    }
+
+    /* FOOTER */
+    .footer {
+      background-color: var(--color-footer-bg);
+      color: var(--color-light);
+      text-align: center;
+      padding: 25px 5%;
+      font-size: 0.9em;
+      transition: background-color 0.4s ease;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-image {
+        margin-top: 30px;
+        width: 250px;
+        height: 250px;
+      }
+
+      .product-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+  <header class="header">
+    <div class="logo">Hybrid Snack</div>
+    <nav class="nav">
+      <a href="#home">Beranda</a>
+      <a href="#products">Menu</a>
+      <button class="toggle-btn" id="themeToggle">🌙 Mode</button>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-image">
+      <img src="log.png" alt="Logo Hybrid Snack">
+    </div>
+    <div class="hero-text">
+      <h1>Camilan Bagus, Untuk yang Tulus!</h1>
+      <p>Camilan kekinian dari Hybrid Snack — Nikmati sensasi Bakkris gurih, Pisang Nudget manis, dan Es Lumut segar!</p>
+      <a href="#products" class="btn">Lihat Menu</a>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <h2>Menu Favorit Kami</h2>
+
+    <div class="product-grid">
+      <!-- Bakkris -->
+      <div class="product-card">
+        <div class="product-image">🌶️ Bakkris</div>
+        <div class="product-content">
+          <h3>Bakkris (Bakso Krispi)</h3>
+          <span class="price">Rp 6.000</span>
+          <p>Renyah, gurih, dan pedasnya bikin nagih!</p>
+          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Bakkris%20ya%20kak!*" target="_blank">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Pisang Nudget -->
+      <div class="product-card">
+        <div class="product-image">🍌 Pisang Nudget</div>
+        <div class="product-content">
+          <h3>Pisang Nudget</h3>
+          <span class="price">Rp 11.000</span>
+          <p>Pisang manis berlapis coklat dan topping premium Gold Choco dan Keju.</p>
+          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Pisang%20Nudget%20ya%20Kak!*" target="_blank">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Es Lumut -->
+      <div class="product-card">
+        <div class="product-image">🌿 Es Lumut</div>
+        <div class="product-content">
+          <h3>Es Lumut Segar</h3>
+          <span class="price">Rp 8.000</span>
+          <p>Minuman dingin viral dengan jelly lumut pandan, susu kental manis, dan es segar!</p>
+          <a class="btn" href="https://wa.me/6289653881348?text=*Assalamualaikum%20Hybrid%20Snack!%20Saya%20ingin%20pesan%20Es%20Lumut%20ya!*" target="_blank">Pesan Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Hybrid Snack | Dibuat dengan 💙 untuk kalian yang setia</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      body.setAttribute('data-theme', newTheme);
+      toggleBtn.textContent = newTheme === 'light' ? '🌙 Mode' : '☀️ Mode';
+    });
+  </script>
+
+</body>
+</html>
