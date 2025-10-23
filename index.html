@@ -5,28 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hybrid Snack - Camilan Kekinian</title>
   <style>
-    /* 🎨 Warna Estetik Biru */
     :root {
       --color-primary: #3B82F6;
-      --color-secondary: #E0F2FE;
+      --color-secondary: #E0FdFE;
       --color-dark: #1E3A8A;
-      --color-light: #FFFFFF;
+      --color-light: #ffffff;
       --color-accent: #60A5FA;
-      --color-text: #1E293B;
-      --color-card-bg: #FFFFFF;
-      --color-hero-bg: #E0F2FE;
+      --color-footer-text: black;
+      --color-card-bg: #BFDBFE;
+      --color-hero-bg: #BFDBFE;
       --color-footer-bg: #1E3A8A;
+      --color-text: #1E293B; /* DITAMBAHKAN agar dark mode berfungsi */
     }
-
-    /* 🌙 Mode Gelap */
     [data-theme="dark"] {
       --color-primary: #60A5FA;
-      --color-secondary: #0F172A;
+      --color-secondary: #1E3A8A;
       --color-dark: #BFDBFE;
       --color-light: #1E293B;
       --color-accent: #3B82F6;
+      --color-card-bg: #0F172A;
       --color-text: #E2E8F0;
-      --color-card-bg: #1E293B;
+      --color-footer-text: #E2E8F0;
       --color-hero-bg: #0F172A;
       --color-footer-bg: #0F172A;
     }
@@ -36,11 +35,9 @@
       margin: 0;
       background-color: var(--color-secondary);
       color: var(--color-text);
-      line-height: 1.6;
       transition: all 0.4s ease;
     }
 
-    /* HEADER */
     .header {
       background-color: var(--color-light);
       display: flex;
@@ -51,9 +48,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      transition: background-color 0.4s ease;
     }
-
     [data-theme="dark"] .header {
       background-color: #1E293B;
       box-shadow: 0 2px 10px rgba(255,255,255,0.1);
@@ -64,54 +59,25 @@
       font-weight: 700;
       color: var(--color-primary);
     }
-
     .nav a {
       text-decoration: none;
       color: var(--color-dark);
       margin-left: 25px;
       font-weight: 500;
-      position: relative;
-      transition: color 0.3s;
     }
-
     [data-theme="dark"] .nav a {
       color: var(--color-text);
     }
-
-    .nav a::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 2px;
-      background: var(--color-primary);
-      transition: width 0.3s;
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-    }
-
-    .nav a:hover::after {
-      width: 100%;
-    }
-
-    /* 🌓 Toggle Button */
     .toggle-btn {
       background: var(--color-primary);
       color: white;
       border: none;
       border-radius: 20px;
-      padding: 8px 16px;
-      margin-left: 1px;
+      padding: 5px 5px;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.3s;
     }
 
-    .toggle-btn:hover {
-      background: var(--color-dark);
-    }
-
-    /* HERO */
     .hero {
       display: flex;
       flex-wrap: wrap;
@@ -119,28 +85,10 @@
       justify-content: space-between;
       padding: 80px 5%;
       background-color: var(--color-hero-bg);
-      min-height: 70vh;
-      transition: background-color 0.4s ease;
     }
-
-    .hero-text {
-      max-width: 500px;
-      flex: 1;
-    }
-
-    .hero-text h1 {
-      font-size: 3em;
-      color: var(--color-dark);
-      margin-bottom: 20px;
-      transition: color 0.3s;
-    }
-
-    .hero-text p {
-      font-size: 1.1em;
-      color: var(--color-text);
-      margin-bottom: 30px;
-    }
-
+    .hero-text { max-width: 500px; flex: 1; }
+    .hero-text h1 { font-size: 3em; color: var(--color-dark); }
+    .hero-text h3 { margin-top: -10px; color: var(--color-primary); }
     .btn {
       background-color: var(--color-primary);
       color: var(--color-light);
@@ -148,54 +96,49 @@
       border-radius: 30px;
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s;
       border: none;
       cursor: pointer;
       display: inline-block;
     }
-
-    .btn:hover {
-      background-color: var(--color-dark);
-      transform: translateY(-2px);
-    }
+    .btn:hover { background-color: var(--color-dark); }
 
     .hero-image {
       width: 350px;
       height: 350px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #BFDBFE, #93C5FD);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at center, #ffffff 0%, black 100%);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
+                  0 0 0 8px var(--color-light);
+      border: 4px solid var(--color-primary);
+      transition: all 0.3s ease;
     }
-
+    .hero-image:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+                  0 0 0 10px var(--color-primary);
+    }
     .hero-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
       display: block;
     }
 
-    /* PRODUCTS */
+    /* PRODUK */
     .products {
       background-color: var(--color-light);
       padding: 80px 5%;
       text-align: center;
-      transition: background-color 0.4s ease;
     }
-
     [data-theme="dark"] .products {
       background-color: var(--color-secondary);
     }
-
     .products h2 {
       font-size: 2.5em;
       color: var(--color-dark);
       margin-bottom: 50px;
-      transition: color 0.3s;
     }
 
     .product-grid {
@@ -204,52 +147,42 @@
       justify-content: center;
       gap: 30px;
     }
-
     .product-card {
       background-color: var(--color-card-bg);
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.08);
       width: 320px;
       overflow: hidden;
-      text-align: left;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    [data-theme="dark"] .product-card {
-      box-shadow: 0 5px 15px rgba(255,255,255,0.1);
-    }
-
     .product-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
-
     .product-image {
       height: 220px;
-      background-color: #DBEAFE;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6em;
-      color: var(--color-dark);
-      font-weight: 600;
+      overflow: hidden;
+      border-bottom: 1px solid #e5e7eb;
     }
-
-    [data-theme="dark"] .product-image {
-      background-color: #1E3A8A;
-      color: #E0F2FE;
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
     }
-
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
     .product-content {
       padding: 25px;
+      text-align: left;
     }
-
     .product-content h3 {
       color: var(--color-primary);
       margin-bottom: 10px;
       font-size: 1.4em;
     }
-
     .price {
       font-weight: 700;
       color: var(--color-accent);
@@ -257,23 +190,15 @@
       display: block;
     }
 
-    .product-content p {
-      font-size: 0.95em;
-      margin-bottom: 20px;
-      color: var(--color-text);
-    }
-
-    /* FOOTER */
     .footer {
       background-color: var(--color-footer-bg);
-      color: var(--color-light);
+      color: var(--color-footer-text);
       text-align: center;
-      padding: 25px 5%;
-      font-size: 0.9em;
-      transition: background-color 0.4s ease;
+      padding: 10px 5%;
+      font-size: 1em;
     }
 
-    /* 🧾 Modal Form */
+    /* Modal */
     #orderModal {
       display:none;
       position:fixed;
@@ -284,7 +209,6 @@
       align-items:center;
       z-index:2000;
     }
-
     #orderModal .modal-content {
       background:var(--color-light);
       color:var(--color-text);
@@ -292,57 +216,53 @@
       border-radius:15px;
       width:90%;
       max-width:400px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.2);
       text-align:center;
     }
 
-    #orderModal input {
-      width:90%;
+    /* konsistenkan input modal agar sejajar */
+    #orderModal .modal-input {
+      width: 100%;
+      max-width: 100%;
       padding:10px;
-      margin:5px 0;
+      margin:8px 0;
       border-radius:8px;
       border:1px solid #ccc;
+      box-sizing: border-box;
+      display: block;
+      font-size: 15px;
+    }
+    /* hidden class untuk menyembunyikan tanpa mengganggu layout saat ditampilkan */
+    #orderModal .modal-input.hidden {
+      display: none;
     }
 
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hero-image {
-        margin-top: 30px;
-        width: 250px;
-        height: 250px;
-      }
-
-      .product-card {
-        width: 90%;
-      }
+    /* responsive tweak */
+    @media (max-width: 480px) {
+      #orderModal .modal-content { padding:20px; }
+      #orderModal .modal-input { font-size:14px; padding:8px; }
     }
   </style>
 </head>
 <body data-theme="light">
-
   <header class="header">
     <div class="logo">Hybrid Snack</div>
     <nav class="nav">
       <a href="#home">Beranda</a>
-      <a href="#products">Menu</a>
-      <button class="toggle-btn" id="themeToggle">🌙 Mode</button>
+      <a href="#products" id="lihatMenuBtn">Menu</a>
+      <button class="toggle-btn" id="themeToggle">🌙/☀️</button>
     </nav>
   </header>
 
   <section class="hero" id="home">
     <div class="hero-image">
-      <img src="log.png" alt="Logo Hybrid Snack">
+      <img src="https://i.imgur.com/86sFBf6.png" alt="Logo Hybrid Snack">
     </div>
     <div class="hero-text">
-      <h1>Camilan Bagus, Untuk yang Tulus!</h1>
-      <h1>COD</h1>
-      <h3>Siap antar sampai ketempat</h3>
-      <p>Nikmati sensasi Bakkris gurih, Pisang Nudget manis, dan Es Lumut segar dengan fitur COD gratis ongkir!</p>
-      <a href="#products" class="btn">Lihat Menu</a>
+      <h1>Camilan Bagus, Untuk kamu yang Tulus!</h1>
+      <p>Mau ngemil tapi sibuk aktivitas?</p>
+      <p>Tinggal klik, <b>Hybrid Snack</b> siap antar!!</p>
+      <h2>COD Khusus Wilayah UIN Madura</h2>
+      <a href="#products" id="lihatMenuBtnHero" class="btn">Lihat Menu</a>
     </div>
   </section>
 
@@ -352,7 +272,9 @@
     <div class="product-grid">
       <!-- Bakkris -->
       <div class="product-card">
-        <div class="product-image">🌶️ Bakkris</div>
+        <div class="product-image">
+          <img src="https://i.imgur.com/Eaw5spA.jpeg" alt="Bakkris">
+        </div>
         <div class="product-content">
           <h3>Bakkris (Bakdabak Krispi)</h3>
           <span class="price">Rp 6.000</span>
@@ -363,7 +285,9 @@
 
       <!-- Pisang Nudget -->
       <div class="product-card">
-        <div class="product-image">🍌 Pisang Nudget</div>
+        <div class="product-image">
+          <img src="https://i.imgur.com/hVOZJN1.jpeg" alt="Pisang Nudget">
+        </div>
         <div class="product-content">
           <h3>Pisang Nudget</h3>
           <span class="price">Rp 11.000</span>
@@ -372,9 +296,24 @@
         </div>
       </div>
 
+      <!-- Teri Crispy -->
+      <div class="product-card">
+        <div class="product-image">
+          <img src="https://i.imgur.com/zjtEfrd.jpeg" alt="Teri Crispy">
+        </div>
+        <div class="product-content">
+          <h3>Teri Crispy</h3>
+          <span class="price">Rp 14.000</span>
+          <p>Dengan dua varian rasa, teri crispy Original dan balado, renyah, gurih, dan bergizi!</p>
+          <button class="btn order-btn" data-product="Teri Crispy">Pesan Sekarang</button>
+        </div>
+      </div>
+
       <!-- Es Lumut -->
       <div class="product-card">
-        <div class="product-image">🌿 Es Lumut</div>
+        <div class="product-image">
+          <img src="https://i.imgur.com/7mqwwWo.jpeg" alt="Es Lumut Segar">
+        </div>
         <div class="product-content">
           <h3>Es Lumut Segar</h3>
           <span class="price">Rp 8.000</span>
@@ -386,69 +325,130 @@
   </section>
 
   <footer class="footer">
-    <p>© 2025 Hybrid Snack | Dibuat dengan 💙 untuk kalian yang setia</p>
+    <p>© 2025 Hybrid Snack | Dibuat dengan cinta untuk kamu yang setia</p>
   </footer>
 
-  <!-- 🧾 Modal Form Pemesanan -->
+  <!-- Modal Form -->
   <div id="orderModal">
     <div class="modal-content">
       <h3>Isi Data Pemesanan COD</h3>
-      <p id="selectedProduct" style="font-weight:600; margin-bottom:15px;"></p>
-      <input type="text" id="name" placeholder="Nama">
-      <input type="text" id="lokasi" placeholder="Lokasi Cth: (Gedung F Ruangan 22)">
-      <input type="number" id="jumlah" placeholder="Jumlah Porsi" min="1">
-      <button id="sendOrder" class="btn" style="margin-top:10px;">Chekout</button><br>
+      <p id="selectedProduct" style="font-weight:600; margin-bottom:12px;"></p>
+
+      <!-- gunakan kelas modal-input agar semua input sejajar -->
+      <input class="modal-input" type="text" id="name" placeholder="Nama">
+      <input class="modal-input" type="text" id="lokasi" placeholder="Lokasi Cth: (Gedung F Ruangan 22)">
+      <!-- varian pakai kelas dan tersembunyi dengan .hidden agar saat ditampilkan tampil sejajar -->
+      <input class="modal-input hidden" type="text" id="varian" placeholder="Varian: Original / Balado">
+      <input class="modal-input" type="number" id="jumlah" placeholder="Jumlah Porsi" min="1">
+      <button id="sendOrder" class="btn" style="margin-top:10px;">Checkout</button><br>
       <button id="closeModal" class="toggle-btn" style="margin-top:10px;">Tutup</button>
     </div>
   </div>
 
   <script>
-    // 🌓 Mode Gelap/Terang
+    // ==== DARK MODE TOGGLE ====
     const toggleBtn = document.getElementById('themeToggle');
     const body = document.body;
     toggleBtn.addEventListener('click', () => {
-      const currentTheme = body.getAttribute('data-theme');
+      const currentTheme = body.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       body.setAttribute('data-theme', newTheme);
-      toggleBtn.textContent = newTheme === 'light' ? '🌙 Mode' : '☀️ Mode';
+      toggleBtn.textContent = newTheme === 'light' ? '🌙/☀️' : '🌙/☀️';
     });
 
-    // 📦 Pemesanan ke WhatsApp
+    // ==== MODAL PESAN ====
     const orderButtons = document.querySelectorAll('.order-btn');
     const modal = document.getElementById('orderModal');
     const selectedProduct = document.getElementById('selectedProduct');
     const sendOrder = document.getElementById('sendOrder');
     const closeModal = document.getElementById('closeModal');
+    const varianInput = document.getElementById('varian');
     let productName = '';
 
     orderButtons.forEach(button => {
       button.addEventListener('click', () => {
         productName = button.dataset.product;
         selectedProduct.textContent = `Produk: ${productName}`;
+        // tampilkan modal
         modal.style.display = 'flex';
+
+        // Tampilkan varian hanya untuk Teri Crispy — pakai class toggle agar styling konsisten
+        const needsVarian = productName.toLowerCase().includes('teri crispy');
+        varianInput.classList.toggle('hidden', !needsVarian);
+        // jika ditampilkan, set required dan fokus untuk pengalaman pengguna
+        varianInput.required = needsVarian;
+        if (needsVarian) {
+          // fokus sedikit delay agar modal sudah visible
+          setTimeout(() => varianInput.focus(), 120);
+        } else {
+          varianInput.value = '';
+        }
       });
     });
 
+    // tombol tutup modal
     closeModal.addEventListener('click', () => {
       modal.style.display = 'none';
+      // reset varian dan sembunyikan kembali
+      varianInput.value = '';
+      varianInput.classList.add('hidden');
+      varianInput.required = false;
     });
 
+    // tutup bila klik di luar konten
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        varianInput.value = '';
+        varianInput.classList.add('hidden');
+        varianInput.required = false;
+      }
+    });
+
+    // kirim pesan WA
     sendOrder.addEventListener('click', () => {
       const name = document.getElementById('name').value.trim();
       const lokasi = document.getElementById('lokasi').value.trim();
       const jumlah = document.getElementById('jumlah').value.trim();
-      if (!name || !lokasi || !jumlah) {
+      const varian = varianInput.value.trim();
+      // jika varian diperlukan tapi kosong, minta isi
+      if (!name || !lokasi || !jumlah || (varianInput.required && !varian)) {
         alert('Harap isi semua data sebelum melanjutkan.');
         return;
       }
       const phone = '6289653881348';
-      const message = `*Assalamualaikum Hybrid Snack!*%0A%0A` +
-        `Saya ingin memesan:%0A🍴 *${productName}*%0A📦 Jumlah: *${jumlah} porsi*%0A%0A` +
-        `👤 Atas Nama: *${name}*%0A🎓 Lokasi: *${lokasi}*%0A%0ATerima kasih kak! 😊`;
+      const rawMessage =
+        `Assalamualaikum Hybrid Snack!\n\n` +
+        `Saya ingin memesan:\n🍴 ${productName}` +
+        (varian ? `\n🌶️ Varian: ${varian}` : '') +
+        `\n📦 Jumlah: ${jumlah} porsi\n\n` +
+        `👤 Atas Nama: ${name}\n📍 Lokasi: ${lokasi}\n\nTerima kasih kak! 😊`;
+      const message = encodeURIComponent(rawMessage);
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
       modal.style.display = 'none';
+      // reset inputs
+      document.getElementById('name').value = '';
+      document.getElementById('lokasi').value = '';
+      document.getElementById('jumlah').value = '';
+      varianInput.value = '';
+      varianInput.classList.add('hidden');
+      varianInput.required = false;
+    });
+
+    // ==== SCROLL KE MENU ====
+    function tampilkanMenu() {
+      const menuSection = document.getElementById('products');
+      if (menuSection) menuSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('lihatMenuBtn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      tampilkanMenu();
+    });
+    document.getElementById('lihatMenuBtnHero')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      tampilkanMenu();
     });
   </script>
-
 </body>
 </html>
